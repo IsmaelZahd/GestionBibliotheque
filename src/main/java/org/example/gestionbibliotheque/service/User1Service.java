@@ -13,4 +13,5 @@ public interface User1Service {
     void deleteAllUser1s();
     User1 getUser1ById(Long id);
     List<User1> getAllUser1s();
+
 }

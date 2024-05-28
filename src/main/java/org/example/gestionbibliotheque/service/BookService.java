@@ -13,5 +13,8 @@ public interface BookService {
     void deleteBookById(Long id);
     void deleteAllBooks();
     Book getBookById(Long id);
+
+
+
     List<Book> getAllBooks();
 }

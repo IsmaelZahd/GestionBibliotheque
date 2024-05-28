@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Homepage</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <script src="/webjars/jquery/3.7.1/jquery.min.js"></script>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Welcome to the Library</h1>
+    <hr>
+    <form id="searchForm" class="mb-3" th:action="@{/books/search}" method="get">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search by title or author" name="keyword" th:value="${keyword}">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+        </div>
+    </form>
+    <a href="#" class="btn btn-info mb-3" id="viewCategoriesBtn">View Categories</a>
+
+    <!-- Display all books -->
+    <h2>All Books</h2>
+    <div class="row" id="booksContainer" th:replace="fragments/bookList :: bookList">
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Handle search form submission
+        $('#searchForm').on('submit', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'GET',
+                data: $(this).serialize(),
+                success: function(data) {
+                    $('#booksContainer').html(data);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching books: ", error);
+                    alert("Error fetching books: " + error);
+                }
+            });
+        });
+
+        // Handle view categories button click
+        $('#viewCategoriesBtn').on('click', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: '/categories/list',
+                type: 'GET',
+                success: function(data) {
+                    console.log("Categories data: ", data); // Log the returned data
+                    let categoriesHtml = '<ul>';
+                    data.forEach(function(category) {
+                        categoriesHtml += '<li><a href="#" class="category-link" data-category="' + category.name + '">' + category.name + '</a></li>';
+                    });
+                    categoriesHtml += '</ul>';
+                    $('#booksContainer').html(categoriesHtml);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching categories: ", error);
+                    alert("Error fetching categories: " + error);
+                }
+            });
+        });
+
+        // Handle category link click
+        $(document).on('click', '.category-link', function(event) {
+            event.preventDefault();
+            const category = $(this).data('category');
+            $.ajax({
+                url: '/booksByCategory',
+                type: 'GET',
+                data: { category: category },
+                success: function(data) {
+                    $('#booksContainer').html(data);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching books by category: ", error);
+                    alert("Error fetching books by category: " + error);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -8,10 +8,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @SpringBootApplication
-public class  GestionBibliothequeApplication implements CommandLineRunner {
+public class GestionBibliothequeApplication implements CommandLineRunner {
 
     @Autowired
     private BookRepository bookRepository;
@@ -42,32 +41,46 @@ public class  GestionBibliothequeApplication implements CommandLineRunner {
         Category category2 = Category.builder().name("Non-Fiction").description("Non-Fiction books").build();
         categoryRepository.save(category1);
         categoryRepository.save(category2);
+        // Log categories
+        categoryRepository.findAll().forEach(category -> System.out.println("Saved Category: " + category.getName()));
 
         // Creating sample books
         Book book1 = Book.builder()
-                .Title("Les Miserables")
-                .AvailableCopies(10)
-                .TotalCopies(20)
-                .PublishedDate(new Date())
-                .Description("A novel by Victor Hugo")
-                .Isbn("153")
+                .title("Les Miserables")
+                .availableCopies(10)
+                .totalCopies(20)
+                .publishedDate(LocalDate.of(1862, 4, 3))  // Use LocalDate here
+                .description("A novel by Victor Hugo")
+                .isbn("153")
                 .author("Victor Hugo")
                 .category(category1)
                 .build();
 
         Book book2 = Book.builder()
-                .Title("1984")
-                .AvailableCopies(5)
-                .TotalCopies(10)
-                .PublishedDate(new Date())
-                .Description("A novel by George Orwell")
-                .Isbn("1984")
+                .title("1984")
+                .availableCopies(5)
+                .totalCopies(10)
+                .publishedDate(LocalDate.of(1949, 6, 8))  // Use LocalDate here
+                .description("A novel by George Orwell")
+                .isbn("1984")
                 .author("George Orwell")
                 .category(category1)
                 .build();
 
+        Book book3 = Book.builder()
+                .title("Antigone")
+                .availableCopies(10)
+                .totalCopies(20)
+                .publishedDate(LocalDate.of(1862, 4, 3))  // Use LocalDate here
+                .description("A novel by Jean Anouilh")
+                .isbn("155")
+                .author("Jean Anouilh")
+                .category(category2)
+                .build();
+
         bookRepository.save(book1);
         bookRepository.save(book2);
+        bookRepository.save(book3);
 
         // Creating sample users
         User1 user1 = User1.builder()

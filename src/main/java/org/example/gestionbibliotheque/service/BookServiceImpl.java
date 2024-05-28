@@ -2,10 +2,7 @@ package org.example.gestionbibliotheque.service;
 
 import lombok.AllArgsConstructor;
 import org.example.gestionbibliotheque.dao.entities.Book;
-import org.example.gestionbibliotheque.dao.entities.Book;
 import org.example.gestionbibliotheque.dao.repositories.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -42,6 +39,7 @@ public class BookServiceImpl implements BookService {
     public Book getBookById(Long id) {
         return bookRepository.findById(id).get();
     }
+
 
     @Override
     public List<Book> getAllBooks() {

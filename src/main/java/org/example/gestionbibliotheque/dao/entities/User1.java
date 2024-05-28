@@ -29,12 +29,12 @@ public class User1 {
     private String role;
     private LocalDate membershipStartDate;
 
-    @OneToMany(mappedBy = "user1", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user1", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Reservation> reservations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user1", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user1", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user1", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user1", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Loan> loans = new ArrayList<>();
 }

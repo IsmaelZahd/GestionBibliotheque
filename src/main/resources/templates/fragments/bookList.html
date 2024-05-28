@@ -1,0 +1,15 @@
+<!-- fragments/bookList.html -->
+<div th:fragment="bookList">
+    <div class="row">
+        <div class="col-md-4" th:each="book : ${ListBooks}">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${book.title}"></h5>
+                    <p class="card-text" th:text="${book.description}"></p>
+                    <p class="card-text">Published: <span th:text="${book.publishedDate}"></span></p>
+                    <!-- Add other book details as needed -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
